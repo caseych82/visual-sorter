@@ -33,7 +33,7 @@ export function Timer({ status }: Props) {
   const secs = (elapsed / 1000).toFixed(3);
 
   return (
-    <div className="font-mono text-2xl text-white/80 tabular-nums">
+    <div className="font-mono text-lg md:text-2xl text-white/80 tabular-nums shrink-0">
       {secs}s
     </div>
   );

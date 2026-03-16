@@ -25,7 +25,7 @@ export function Controls({ status, onPlay, onPause, onResume, onStop, onReset, o
   const isActive  = status === 'running' || status === 'paused';
 
   return (
-    <div className="flex items-center gap-2 flex-1 flex-wrap">
+    <div className="flex items-center gap-1.5 md:gap-2 flex-1 flex-wrap">
       {/* Play / Pause / Resume */}
       {status === 'idle' || status === 'done' ? (
         <button
@@ -85,7 +85,7 @@ export function Controls({ status, onPlay, onPause, onResume, onStop, onReset, o
       </button>
 
       {/* Speed slider */}
-      <div className="flex items-center gap-2 flex-1 min-w-[120px] max-w-xs">
+      <div className="flex items-center gap-2 flex-1 min-w-[100px] max-w-xs">
         <span className="text-white/40 text-xs shrink-0">Slow</span>
         <input
           type="range"

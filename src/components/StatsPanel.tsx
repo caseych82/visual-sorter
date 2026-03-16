@@ -8,10 +8,9 @@ interface Props {
 
 export function StatsPanel({ frame, algorithm, elapsed: _elapsed }: Props) {
   return (
-    <div className="flex items-center gap-6 text-sm shrink-0">
-      <Stat label="Comparisons" value={frame.comparisons.toLocaleString()} color="text-yellow-400" />
-      <Stat label="Swaps"       value={frame.swaps.toLocaleString()}       color="text-red-400"    />
-      <Stat label="Elements"    value={frame.array.length.toLocaleString()} color="text-blue-400"  />
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs md:text-sm">
+      <Stat label="Cmps" value={frame.comparisons.toLocaleString()} color="text-yellow-400" />
+      <Stat label="Swaps" value={frame.swaps.toLocaleString()}       color="text-red-400"    />
       {algorithm && (
         <>
           <Stat label="Avg"   value={algorithm.timeComplexity.average} color="text-orange-400" />

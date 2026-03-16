@@ -169,7 +169,7 @@ export default function App() {
       {!showIntro && (
     <motion.div
       key="main"
-      className="min-h-screen text-white flex flex-col select-none"
+      className="min-h-screen min-h-dvh text-white flex flex-col select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.55 }}
@@ -188,7 +188,7 @@ export default function App() {
             href="https://github.com/caseych82"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white/25 hover:text-white/50 text-[10px] font-mono tracking-wider transition-colors leading-none mt-0.5"
+            className="hidden sm:block text-white/25 hover:text-white/50 text-[10px] font-mono tracking-wider transition-colors leading-none mt-0.5"
           >
             github.com/caseych82
           </a>
@@ -316,7 +316,7 @@ export default function App() {
             </div>
 
             {/* ── Row 3: controls bar ── */}
-            <div className="flex flex-wrap items-center gap-3 md:gap-4 shrink-0 px-3 py-2 rounded-2xl bg-black/20 backdrop-blur-md border border-white/5">
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 shrink-0 px-2 md:px-3 py-2 rounded-2xl bg-black/20 backdrop-blur-md border border-white/5">
               <Timer status={engine.status} />
               <Controls
                 status={engine.status}
