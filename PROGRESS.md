@@ -53,6 +53,17 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 
 ---
 
+## Phase 3.5 — Additional Algorithms (unplanned addition)
+**Status:** `[x] Complete`
+
+- [x] Cocktail Shaker Sort — bidirectional bubble; forward then backward pass each iteration
+- [x] Comb Sort — shrinking-gap bubble (gap ÷ 1.3); long-range swaps early, very aggressive
+- [x] Gnome Sort — chaotic back-and-forth; advances on order, swaps and retreats on disorder
+- [x] Odd-Even Sort — alternating odd/even adjacent pair passes; creates wave-like visual patterns
+- [x] Pancake Sort — finds max, flips it to front, flips to position; dramatic full prefix reversals
+
+---
+
 ## Phase 4 — Single Algorithm Mode
 **Status:** `[x] Complete`
 
@@ -62,7 +73,9 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 - [x] Live stats: comparisons, swaps, element count, complexity badges
 - [x] Array type selector: random / nearly-sorted / reversed / few-unique
 - [x] New Array shuffle button
-- [x] Play / Pause / Resume / Reset / Step controls
+- [x] Play / Pause / Resume / Step controls
+- [x] **Stop** button — halts mid-sort, freezes partial array, returns to idle (gen discarded, no restore)
+- [x] **Reset** button — restores original unsorted array, returns to idle
 - [x] rAF-based Timer component
 
 ---
@@ -116,3 +129,5 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 | 2026-03-15 | Canvas flicker fix: stable `draw` fn reads from refs, never cancels a running rAF loop |
 | 2026-03-15 | Phase 6: ActivityBackground blobs use inline `animation` style (not Tailwind) so keyframe names don't need safelist |
 | 2026-03-15 | StrictMode RAF bug fixed: cleanup now resets `rafRef.current = null` after cancel so remount can schedule draws |
+| 2026-03-15 | Stop vs Reset distinction: Stop keeps partial array (useful for inspection), Reset restores original unsorted |
+| 2026-03-15 | 5 additional algorithms added post-Phase 6; Pancake uses `yield*` generator delegation for flip subroutine |
