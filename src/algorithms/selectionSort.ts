@@ -42,5 +42,20 @@ export const selectionSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n²)', average: 'O(n²)', worst: 'O(n²)' },
   spaceComplexity: 'O(1)',
   description: 'Finds the minimum element from the unsorted portion and places it at the beginning.',
+  explanation:
+    'Divides the array into a sorted left region and an unsorted right region. On each pass it scans the entire unsorted region to find the minimum, then swaps it to the boundary. Unlike Bubble Sort, it makes at most n−1 swaps total — useful when writes are expensive. The downside: it always performs O(n²) comparisons with no early-exit, regardless of how sorted the input already is.',
+  codeExample: `function selectionSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n - 1; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIdx]) minIdx = j;
+    }
+    if (minIdx !== i) {
+      [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+    }
+  }
+  return arr;
+}`,
   generator,
 };

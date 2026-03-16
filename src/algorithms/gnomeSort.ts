@@ -33,5 +33,19 @@ export const gnomeSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
   spaceComplexity: 'O(1)',
   description: 'Moves forward when elements are in order, swaps and steps back when they aren\'t — chaotic but correct.',
+  explanation:
+    'Named after a garden gnome sorting flower pots: look at the pot in front of you and the one behind. If they\'re in order, step forward. If not, swap them and step back. Repeat. Conceptually the simplest sorting algorithm — just one rule at each step — but the constant back-and-forth makes it O(n²) and very slow in practice. The erratic movement pattern creates a distinctive visual signature that is completely unlike any other algorithm here.',
+  codeExample: `function gnomeSort(arr) {
+  let i = 0;
+  while (i < arr.length) {
+    if (i === 0 || arr[i] >= arr[i - 1]) {
+      i++; // in order — advance
+    } else {
+      [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]]; // swap
+      i--;  // step back
+    }
+  }
+  return arr;
+}`,
   generator,
 };

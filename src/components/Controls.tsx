@@ -31,7 +31,7 @@ export function Controls({ status, onPlay, onPause, onResume, onStop, onReset, o
         <button
           onClick={onPlay}
           disabled={status === 'done'}
-          className="h-9 px-4 flex items-center gap-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 disabled:opacity-30 transition-colors text-white text-sm font-medium"
+          className="h-9 px-4 flex items-center gap-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 disabled:opacity-30 transition-colors text-white text-sm font-medium"
           title="Play"
         >
           ▶ Play
@@ -47,7 +47,7 @@ export function Controls({ status, onPlay, onPause, onResume, onStop, onReset, o
       ) : (
         <button
           onClick={onResume}
-          className="h-9 px-4 flex items-center gap-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 transition-colors text-white text-sm font-medium"
+          className="h-9 px-4 flex items-center gap-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 transition-colors text-white text-sm font-medium"
           title="Resume"
         >
           ▶ Resume
@@ -93,7 +93,7 @@ export function Controls({ status, onPlay, onPause, onResume, onStop, onReset, o
           max={100}
           value={sliderVal}
           onChange={(e) => onSpeedChange(sliderToMs(Number(e.target.value)))}
-          className="flex-1 accent-purple-500"
+          className="flex-1 accent-orange-500"
         />
         <span className="text-white/40 text-xs shrink-0">Fast</span>
       </div>

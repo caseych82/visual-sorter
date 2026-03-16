@@ -55,5 +55,31 @@ export const radixSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(nk)', average: 'O(nk)', worst: 'O(nk)' },
   spaceComplexity: 'O(n + k)',
   description: 'Sorts integers digit by digit from least significant to most significant using counting sort as a subroutine.',
+  explanation:
+    'Never compares elements directly. Instead it distributes them into 10 buckets (0–9) based on a single digit, then reads them back in order — repeating this stable counting-sort pass for each digit position from least to most significant. After k passes (one per digit), the array is fully sorted. Runs in O(nk) time where k is the number of digits, which is effectively O(n) for fixed-range integers. Only works on data with a discrete key (integers, strings).',
+  codeExample: `function radixSort(arr) {
+  const max = Math.max(...arr);
+  for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10)
+    countingSort(arr, exp);
+  return arr;
+}
+
+function countingSort(arr, exp) {
+  const n = arr.length;
+  const output = new Array(n);
+  const count  = new Array(10).fill(0);
+  // Count digit occurrences
+  for (let i = 0; i < n; i++)
+    count[Math.floor(arr[i] / exp) % 10]++;
+  // Cumulative count
+  for (let i = 1; i < 10; i++)
+    count[i] += count[i - 1];
+  // Build output (right-to-left keeps it stable)
+  for (let i = n - 1; i >= 0; i--) {
+    const d = Math.floor(arr[i] / exp) % 10;
+    output[--count[d]] = arr[i];
+  }
+  for (let i = 0; i < n; i++) arr[i] = output[i];
+}`,
   generator,
 };

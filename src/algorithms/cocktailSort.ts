@@ -52,5 +52,33 @@ export const cocktailSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
   spaceComplexity: 'O(1)',
   description: 'Bidirectional bubble sort — sweeps left-to-right then right-to-left each pass.',
+  explanation:
+    'A bidirectional extension of Bubble Sort. The forward pass bubbles the largest unsorted element to the right end; the backward pass then bubbles the smallest unsorted element to the left end. Each pair of passes shrinks the unsorted region from both sides simultaneously. This helps "turtles" — small values stuck near the end — reach their correct position much faster than they would in plain Bubble Sort, which can only move them one step per full pass.',
+  codeExample: `function cocktailSort(arr) {
+  let start = 0, end = arr.length - 1;
+  let swapped = true;
+  while (swapped) {
+    swapped = false;
+    // Forward pass — bubble max to right
+    for (let i = start; i < end; i++) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+      }
+    }
+    if (!swapped) break;
+    swapped = false;
+    end--;
+    // Backward pass — bubble min to left
+    for (let i = end - 1; i >= start; i--) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+      }
+    }
+    start++;
+  }
+  return arr;
+}`,
   generator,
 };

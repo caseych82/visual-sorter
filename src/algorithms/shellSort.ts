@@ -40,5 +40,24 @@ export const shellSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n log n)', average: 'O(n log² n)', worst: 'O(n log² n)' },
   spaceComplexity: 'O(1)',
   description: 'Generalization of insertion sort that compares elements separated by a shrinking gap sequence.',
+  explanation:
+    'Runs Insertion Sort multiple times, each time with a different "gap" between the elements being compared. Starting with a large gap allows far-apart elements to move toward their correct positions quickly — something plain Insertion Sort cannot do. The gap shrinks each pass (here: halved) until it reaches 1, at which point a final ordinary Insertion Sort runs on a nearly-sorted array and finishes very cheaply. Performance depends heavily on the gap sequence chosen.',
+  codeExample: `function shellSort(arr) {
+  let gap = Math.floor(arr.length / 2);
+  while (gap > 0) {
+    for (let i = gap; i < arr.length; i++) {
+      const temp = arr[i];
+      let j = i;
+      // Insertion sort with this gap
+      while (j >= gap && arr[j - gap] > temp) {
+        arr[j] = arr[j - gap];
+        j -= gap;
+      }
+      arr[j] = temp;
+    }
+    gap = Math.floor(gap / 2);
+  }
+  return arr;
+}`,
   generator,
 };

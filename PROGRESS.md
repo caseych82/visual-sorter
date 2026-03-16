@@ -117,6 +117,41 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 
 ---
 
+## Phase 7 — Intro Screen
+**Status:** `[x] Complete`
+
+- [x] `IntroScreen.tsx` — full-screen canvas Matrix-rain effect using colored boxes falling down columns
+- [x] 5×7 pixel-font bitmap renderer for title text "VISUAL SORTER / BY CASEY" centered on screen
+- [x] Title cells render with cyan→magenta gradient (line 1) and gold→yellow (line 2); two-pass draw: blurred glow + sharp pixels with sine-wave pulse
+- [x] Rain streams: 1–2 per column, randomized speed/hue; stream head flashes white, trail fades with decay; cell size auto-fits viewport (4–15px)
+- [x] Press Start 2P font (Google Fonts) loaded in `index.html`
+- [x] 8-bit arcade START button — 3D box-shadow, pulsing red glow keyframe, Framer Motion lift/tap response
+- [x] "PRESS TO PLAY" blinking subtitle under button
+- [x] `AnimatePresence` fade transition (0.55s) between intro and main app
+- [x] Page title updated to "Visual Sorter by Casey"
+
+---
+
+## Phase 8 — Algorithm Education Panel
+**Status:** `[x] Complete`
+
+- [x] `AlgorithmMeta` extended with `explanation: string` and `codeExample: string` fields
+- [x] All 13 algorithms updated with narrative explanations and clean JS code examples
+- [x] `AlgoInfoPanel.tsx` — right-side slide-in drawer (spring animation); glassmorphic `bg-[#09091a]/95 backdrop-blur-2xl`
+- [x] Panel sections: complexity grid (Best/Average/Worst/Space with color-coded badges), "How it works" prose, code block
+- [x] Built-in syntax highlighter (no dependency) — regex tokenizer colors keywords (violet), strings (emerald), numbers (amber), comments (grey/italic)
+- [x] Code block styled as faux terminal with macOS-style traffic-light dots
+- [x] `AlgoSelector` redesigned as split pills: left half selects algorithm, right `ⓘ` half opens info panel for any algo without disrupting selection
+- [x] Backdrop click or ✕ closes panel
+
+---
+
+## Defaults
+- Viz mode default: `tetris`
+- Array size default: `n = 15`
+
+---
+
 ## Notes / Decisions Log
 
 | Date | Decision |
@@ -131,3 +166,7 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 | 2026-03-15 | StrictMode RAF bug fixed: cleanup now resets `rafRef.current = null` after cancel so remount can schedule draws |
 | 2026-03-15 | Stop vs Reset distinction: Stop keeps partial array (useful for inspection), Reset restores original unsorted |
 | 2026-03-15 | 5 additional algorithms added post-Phase 6; Pancake uses `yield*` generator delegation for flip subroutine |
+| 2026-03-15 | Intro screen cell size computed dynamically (`max(4, min(15, floor(W*0.9/77)))`) so title always fits viewport |
+| 2026-03-15 | AlgoInfoPanel syntax highlighter is a hand-rolled regex tokenizer — avoids adding Prism/highlight.js dependency |
+| 2026-03-15 | Split-pill design in AlgoSelector: clicking name selects, clicking ⓘ opens info — info browsable without disrupting active sort |
+| 2026-03-15 | Defaults changed to tetris viz mode and n=15 for a more visual first impression |

@@ -14,7 +14,7 @@ export function StatsPanel({ frame, algorithm, elapsed: _elapsed }: Props) {
       <Stat label="Elements"    value={frame.array.length.toLocaleString()} color="text-blue-400"  />
       {algorithm && (
         <>
-          <Stat label="Avg"   value={algorithm.timeComplexity.average} color="text-purple-400" />
+          <Stat label="Avg"   value={algorithm.timeComplexity.average} color="text-orange-400" />
           <Stat label="Space" value={algorithm.spaceComplexity}        color="text-green-400"  />
         </>
       )}

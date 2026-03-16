@@ -38,5 +38,21 @@ export const bubbleSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
   spaceComplexity: 'O(1)',
   description: 'Repeatedly steps through the list, compares adjacent elements and swaps them if out of order.',
+  explanation:
+    'Each pass scans left-to-right, swapping any adjacent pair that is out of order. The largest unsorted value "bubbles up" to its final position at the right end after each pass. An early-exit flag stops the algorithm the moment a full pass completes with zero swaps — meaning the array is already sorted. Simple and stable, but the O(n²) comparison count makes it impractical for large inputs.',
+  codeExample: `function bubbleSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n - 1; i++) {
+    let swapped = false;
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        swapped = true;
+      }
+    }
+    if (!swapped) break; // already sorted
+  }
+  return arr;
+}`,
   generator,
 };

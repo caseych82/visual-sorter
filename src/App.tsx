@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useSortEngine }         from './hooks/useSortEngine';
 import { SortCanvas }            from './components/SortCanvas';
 import type { VizMode }          from './components/SortCanvas';
@@ -8,6 +9,8 @@ import { StatsPanel }            from './components/StatsPanel';
 import { Timer }                 from './components/Timer';
 import { RaceLayout }            from './components/RaceLayout';
 import { ActivityBackground }    from './components/ActivityBackground';
+import { IntroScreen }           from './components/IntroScreen';
+import { AlgoInfoPanel }         from './components/AlgoInfoPanel';
 import { algorithms }            from './algorithms';
 import type { AlgorithmMeta }    from './algorithms/types';
 import { audioEngine }           from './engine/AudioEngine';
@@ -41,18 +44,36 @@ function buildArray(size: number, type: ArrayType): number[] {
 // ─── App ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  const [showIntro, setShowIntro]       = useState(true);
+  const [infoAlgo, setInfoAlgo]         = useState<AlgorithmMeta | null>(null);
   const [mode, setMode]                 = useState<Mode>('single');
   const [selectedAlgo, setSelectedAlgo] = useState<AlgorithmMeta | null>(null);
   const [arrayType, setArrayType]       = useState<ArrayType>('random');
   const [arraySize, setArraySize]       = useState(80);
-  const [speed, setSpeed]               = useState(50);
+  const [speed, setSpeed]               = useState(3);
   const [audioReady, setAudioReady]     = useState(false);
-  const [vizMode, setVizMode]           = useState<VizMode>('bars');
+  const [vizMode, setVizMode]           = useState<VizMode>('tetris');
   const [muted, setMuted]               = useState(false);
   const [volume, setVolume]             = useState(75); // 0–100
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const elapsedRef   = useRef(0);
   const startTimeRef = useRef<number | null>(null);
+
+  // ── Fullscreen ───────────────────────────────────────────────────────────────
+  const toggleFullscreen = useCallback(async () => {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  }, []);
+
+  useEffect(() => {
+    const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', onFsChange);
+    return () => document.removeEventListener('fullscreenchange', onFsChange);
+  }, []);
 
   const engine = useSortEngine();
 
@@ -84,7 +105,7 @@ export default function App() {
         spaceComplexity: '-', description: '',
         generator: function* () {},
       },
-      buildArray(arraySize, 'random'),
+      buildArray(80, 'random'),
     );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -141,7 +162,18 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen text-white flex flex-col select-none">
+    <AnimatePresence mode="wait">
+      {showIntro && (
+        <IntroScreen key="intro" onStart={() => setShowIntro(false)} />
+      )}
+      {!showIntro && (
+    <motion.div
+      key="main"
+      className="min-h-screen text-white flex flex-col select-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.55 }}
+    >
 
       {/* ── Animated gradient background ── */}
       <ActivityBackground status={engine.status} swapCount={engine.frame.swaps} />
@@ -149,7 +181,7 @@ export default function App() {
       {/* ── Header — glassmorphism ── */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/10 bg-black/30 backdrop-blur-xl shrink-0">
         <h1 className="text-xl font-bold tracking-tight">
-          Visual<span className="text-purple-400">Sorter</span>
+          Visual<span className="text-orange-400">Sorter</span>
         </h1>
 
         <div className="flex items-center gap-2 md:gap-3">
@@ -187,7 +219,7 @@ export default function App() {
             <input
               type="range" min={0} max={100} value={muted ? 0 : volume}
               onChange={(e) => handleVolumeChange(Number(e.target.value))}
-              className="w-20 accent-purple-500 hidden sm:block"
+              className="w-20 accent-orange-500 hidden sm:block"
               title="Volume"
             />
           </div>
@@ -199,13 +231,22 @@ export default function App() {
                 key={m}
                 onClick={() => setMode(m)}
                 className={`px-4 py-1.5 text-sm font-medium capitalize transition-colors ${
-                  mode === m ? 'bg-purple-600 text-white' : 'text-white/50 hover:text-white'
+                  mode === m ? 'bg-orange-600 text-white' : 'text-white/50 hover:text-white'
                 }`}
               >
                 {m}
               </button>
             ))}
           </div>
+
+          {/* Fullscreen toggle */}
+          <button
+            onClick={toggleFullscreen}
+            title={isFullscreen ? 'Exit fullscreen (Esc)' : 'Enter fullscreen'}
+            className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-sm text-white/60 hover:text-white"
+          >
+            {isFullscreen ? '⊡' : '⛶'}
+          </button>
         </div>
       </header>
 
@@ -218,6 +259,7 @@ export default function App() {
               algorithms={algorithms}
               selected={selectedAlgo}
               onSelect={handleAlgoSelect}
+              onInfo={setInfoAlgo}
             />
 
             {/* ── Row 2: array controls ── */}
@@ -263,16 +305,7 @@ export default function App() {
               </button>
             </div>
 
-            {/* ── Row 3: canvas (flex-1) ── */}
-            <div className="flex-1 min-h-0 rounded-2xl overflow-hidden border border-white/10 bg-[#0d0d14]/90 backdrop-blur-sm">
-              <SortCanvas
-                frame={engine.frame}
-                vizMode={vizMode}
-                label={selectedAlgo?.name}
-              />
-            </div>
-
-            {/* ── Row 4: bottom bar — glass pill ── */}
+            {/* ── Row 3: controls bar ── */}
             <div className="flex flex-wrap items-center gap-3 md:gap-4 shrink-0 px-3 py-2 rounded-2xl bg-black/20 backdrop-blur-md border border-white/5">
               <Timer status={engine.status} />
               <Controls
@@ -292,6 +325,15 @@ export default function App() {
                 elapsed={elapsedRef.current}
               />
             </div>
+
+            {/* ── Row 4: canvas (flex-1) ── */}
+            <div className="flex-1 min-h-0 rounded-2xl overflow-hidden border border-white/10 bg-[#0d0d14]/90 backdrop-blur-sm">
+              <SortCanvas
+                frame={engine.frame}
+                vizMode={vizMode}
+                label={selectedAlgo?.name}
+              />
+            </div>
           </>
         ) : (
           <div className="flex-1 min-h-0">
@@ -299,6 +341,10 @@ export default function App() {
           </div>
         )}
       </main>
-    </div>
+
+      <AlgoInfoPanel algo={infoAlgo} onClose={() => setInfoAlgo(null)} />
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

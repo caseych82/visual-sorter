@@ -14,5 +14,7 @@ export interface AlgorithmMeta {
   timeComplexity: { best: string; average: string; worst: string };
   spaceComplexity: string;
   description: string;
+  explanation: string;
+  codeExample: string;
   generator: (arr: number[]) => Generator<SortFrame, void, unknown>;
 }

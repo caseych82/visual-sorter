@@ -65,7 +65,7 @@ function RaceSide({ side, algo, onSelect, engine, elapsed, winner, phase, disabl
               disabled={phase === 'racing' || phase === 'countdown' || isDisabled}
               className={`px-2.5 py-1 rounded text-xs font-medium border transition-colors disabled:opacity-40 ${
                 isSelected
-                  ? 'bg-purple-600 border-purple-500 text-white'
+                  ? 'bg-orange-600 border-orange-500 text-white'
                   : isDisabled
                   ? 'bg-white/5 border-white/10 text-white/20 cursor-not-allowed'
                   : 'bg-white/5 border-white/10 text-white/50 hover:text-white hover:bg-white/10'
@@ -293,7 +293,7 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
               </button>
             )}
             <button onClick={startRace} disabled={!canRace}
-              className="px-6 py-2 rounded-lg text-sm font-bold bg-purple-600 hover:bg-purple-500 disabled:opacity-30 text-white transition-colors"
+              className="px-6 py-2 rounded-lg text-sm font-bold bg-orange-600 hover:bg-orange-500 disabled:opacity-30 text-white transition-colors"
             >
               {phase === 'done' ? '▶ Race Again' : '▶ Race!'}
             </button>

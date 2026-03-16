@@ -32,5 +32,19 @@ export const insertionSort: AlgorithmMeta = {
   timeComplexity: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
   spaceComplexity: 'O(1)',
   description: 'Builds the sorted array one item at a time by inserting each element into its correct position.',
+  explanation:
+    'Takes the next unsorted element and scans backward through the already-sorted region, shifting elements right until it finds the correct insertion point. Like sorting a hand of playing cards. Exceptionally fast on small or nearly-sorted arrays — it approaches O(n) when the input is almost ordered. Because of this it is used as the finishing pass inside hybrid algorithms like Timsort (Python\'s sort).',
+  codeExample: `function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    const key = arr[i];
+    let j = i - 1;
+    while (j >= 0 && arr[j] > key) {
+      arr[j + 1] = arr[j]; // shift right
+      j--;
+    }
+    arr[j + 1] = key; // insert
+  }
+  return arr;
+}`,
   generator,
 };
