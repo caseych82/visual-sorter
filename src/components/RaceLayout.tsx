@@ -159,6 +159,7 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
   const [winner,     setWinner]     = useState<Winner>(null);
   const [arraySize,  setArraySize]  = useState(80);
   const [arrayType,  setArrayType]  = useState<ArrayType>('random');
+  const [speed,      setSpeed]      = useState(3);
 
   const leftEngine  = useSortEngine();
   const rightEngine = useSortEngine();
@@ -222,11 +223,13 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
     await new Promise<void>((r) => setTimeout(r, 450));
     setCountdown(null);
 
+    leftEngine.setSpeed(speed);
+    rightEngine.setSpeed(speed);
     raceStartRef.current = performance.now();
     setPhase('racing');
     leftEngine.play();
     rightEngine.play();
-  }, [leftAlgo, rightAlgo, arraySize, arrayType, loadBoth, leftEngine, rightEngine]);
+  }, [leftAlgo, rightAlgo, arraySize, arrayType, speed, loadBoth, leftEngine, rightEngine]);
 
   const stopRace = () => {
     leftEngine.stop();
@@ -285,6 +288,22 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
             className="w-24 accent-indigo-500 disabled:opacity-40"
           />
           <span className="text-white/60 font-mono text-xs w-8">{arraySize}</span>
+        </div>
+
+        {/* Speed slider */}
+        <div className="flex items-center gap-2">
+          <span className="text-white/40 text-xs shrink-0">Slow</span>
+          <input type="range" min={1} max={100}
+            value={Math.round(100 - (Math.log(speed) / Math.log(500)) * 100)}
+            onChange={(e) => {
+              const ms = Math.round(Math.exp((100 - Number(e.target.value)) / 100 * Math.log(500)));
+              setSpeed(ms);
+              leftEngine.setSpeed(ms);
+              rightEngine.setSpeed(ms);
+            }}
+            className="w-24 accent-orange-500"
+          />
+          <span className="text-white/40 text-xs shrink-0">Fast</span>
         </div>
 
         <div className="flex-1" />
