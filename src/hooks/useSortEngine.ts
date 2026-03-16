@@ -47,9 +47,10 @@ export function useSortEngine() {
   const play   = useCallback(() => engineRef.current.play(),   []);
   const pause  = useCallback(() => engineRef.current.pause(),  []);
   const resume = useCallback(() => engineRef.current.resume(), []);
+  const stop   = useCallback(() => engineRef.current.stop(),   []);
   const reset  = useCallback(() => engineRef.current.reset(),  []);
   const step   = useCallback(() => engineRef.current.step(),   []);
   const setSpeed = useCallback((ms: number) => engineRef.current.setSpeed(ms), []);
 
-  return { frame, status, load, play, pause, resume, reset, step, setSpeed };
+  return { frame, status, load, play, pause, resume, stop, reset, step, setSpeed };
 }

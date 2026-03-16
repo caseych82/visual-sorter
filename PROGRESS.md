@@ -94,13 +94,13 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 ---
 
 ## Phase 6 — Polish & Deploy
-**Status:** `[ ] Not started`
+**Status:** `[x] Complete`
 
-- [ ] Responsive layout (mobile: single mode, desktop: race mode)
-- [ ] Dark-mode glassmorphism UI
-- [ ] Animated gradient background reacting to sort activity
-- [ ] Mute/unmute + volume control
-- [ ] Deploy to GitHub Pages via `gh-pages`
+- [x] Responsive layout (mobile: single mode only; race tab hidden below md breakpoint; controls wrap gracefully)
+- [x] Glassmorphism UI (header: `bg-black/30 backdrop-blur-xl`; bottom bar: `bg-black/20 backdrop-blur-md rounded-2xl`; viz toggle + mode toggle get `bg-white/5` backing)
+- [x] `ActivityBackground.tsx` — 3 radial-gradient blobs: purple (top-left) + blue (bottom-right) drift with CSS keyframe animations when sorting runs; center teal blob flashes red on each swap, turns green on completion
+- [x] Mute/unmute button (🔊/🔉/🔇) + volume slider (0–100 → −40 dB–0 dB) in header
+- [x] `gh-pages` deploy scripts added (`npm run deploy`); vite base set to `'./'` for build; repo pushed to GitHub
 
 ---
 
@@ -114,3 +114,5 @@ Each exports: `{ name, timeComplexity, spaceComplexity, description, generator }
 | 2026-03-15 | Tailwind v3 + PostCSS used instead of `@tailwindcss/vite` — incompatible with Vite 8 |
 | 2026-03-15 | Tetris viz mode added as user request between Phase 5 and Phase 6 |
 | 2026-03-15 | Canvas flicker fix: stable `draw` fn reads from refs, never cancels a running rAF loop |
+| 2026-03-15 | Phase 6: ActivityBackground blobs use inline `animation` style (not Tailwind) so keyframe names don't need safelist |
+| 2026-03-15 | StrictMode RAF bug fixed: cleanup now resets `rafRef.current = null` after cancel so remount can schedule draws |

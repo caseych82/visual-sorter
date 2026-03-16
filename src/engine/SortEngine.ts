@@ -51,6 +51,18 @@ export class SortEngine {
     this.schedule();
   }
 
+  // Stop: halt mid-sort and freeze at current array state (no restore)
+  stop() {
+    if (this._status === 'idle') return;
+    this.clearTimer();
+    this.gen = null;
+    if (this.lastFrame) {
+      this.callbacks.onFrame({ ...this.lastFrame, highlights: {} });
+    }
+    this.setStatus('idle');
+  }
+
+  // Reset: restore the original unsorted array
   reset() {
     this.clearTimer();
     this.gen = null;

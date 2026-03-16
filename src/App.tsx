@@ -280,6 +280,7 @@ export default function App() {
                 onPlay={engine.play}
                 onPause={engine.pause}
                 onResume={engine.resume}
+                onStop={engine.stop}
                 onReset={engine.reset}
                 onStep={engine.step}
                 onSpeedChange={(ms) => { setSpeed(ms); engine.setSpeed(ms); }}
