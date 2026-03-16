@@ -228,6 +228,13 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
     rightEngine.play();
   }, [leftAlgo, rightAlgo, arraySize, arrayType, loadBoth, leftEngine, rightEngine]);
 
+  const stopRace = () => {
+    leftEngine.stop();
+    rightEngine.stop();
+    setPhase('done');
+    setWinner(null);
+  };
+
   const resetRace = () => {
     setPhase('idle');
     setWinner(null);
@@ -301,7 +308,14 @@ export function RaceLayout({ vizMode }: { vizMode: VizMode }) {
         ) : phase === 'countdown' ? (
           <div className="text-white/50 text-sm">Get ready…</div>
         ) : (
-          <div className="text-white/50 text-sm animate-pulse">Racing…</div>
+          <div className="flex items-center gap-3">
+            <div className="text-white/50 text-sm animate-pulse">Racing…</div>
+            <button onClick={stopRace}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-red-600/80 hover:bg-red-500 text-white transition-colors"
+            >
+              ■ Stop
+            </button>
+          </div>
         )}
       </div>
 
