@@ -22,7 +22,7 @@ const FONT: Record<string, number[]> = {
   '2': [0b01110, 0b10001, 0b00001, 0b00110, 0b01000, 0b10000, 0b11111],
 };
 
-const TITLE_LINES = ['VISUAL SORTER', 'CASEYCH82'];
+const TITLE_LINES = ['VISUAL SORTER'];
 const CHAR_W = 5, CHAR_H = 7, GAP_X = 1, GAP_Y = 3;
 
 interface TitleCell { col: number; row: number; lineIdx: number; fraction: number; }
@@ -261,6 +261,18 @@ export function IntroScreen({ onStart }: { onStart: () => void }) {
         >
           PRESS TO PLAY
         </motion.p>
+
+        <motion.a
+          href="https://github.com/caseych82"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/30 hover:text-white/60 text-xs font-mono tracking-widest transition-colors"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+        >
+          github.com/caseych82
+        </motion.a>
       </div>
     </motion.div>
   );

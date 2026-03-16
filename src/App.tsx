@@ -180,9 +180,19 @@ export default function App() {
 
       {/* ── Header — glassmorphism ── */}
       <header className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-6 py-3 border-b border-white/10 bg-black/30 backdrop-blur-xl shrink-0">
-        <h1 className="text-xl font-bold tracking-tight">
-          Visual<span className="text-orange-400">Sorter</span>
-        </h1>
+        <div className="flex flex-col">
+          <h1 className="text-xl font-bold tracking-tight leading-none">
+            Visual<span className="text-orange-400">Sorter</span>
+          </h1>
+          <a
+            href="https://github.com/caseych82"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white/25 hover:text-white/50 text-[10px] font-mono tracking-wider transition-colors leading-none mt-0.5"
+          >
+            github.com/caseych82
+          </a>
+        </div>
 
         <div className="flex items-center gap-2 md:gap-3">
           {/* Viz mode toggle */}
