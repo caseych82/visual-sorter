@@ -17,9 +17,12 @@ const FONT: Record<string, number[]> = {
   'U': [0b10001, 0b10001, 0b10001, 0b10001, 0b10001, 0b10001, 0b01110],
   'V': [0b10001, 0b10001, 0b10001, 0b01010, 0b01010, 0b00100, 0b00100],
   'Y': [0b10001, 0b10001, 0b01010, 0b00100, 0b00100, 0b00100, 0b00100],
+  'H': [0b10001, 0b10001, 0b10001, 0b11111, 0b10001, 0b10001, 0b10001],
+  '8': [0b01110, 0b10001, 0b10001, 0b01110, 0b10001, 0b10001, 0b01110],
+  '2': [0b01110, 0b10001, 0b00001, 0b00110, 0b01000, 0b10000, 0b11111],
 };
 
-const TITLE_LINES = ['VISUAL SORTER', 'BY CASEY'];
+const TITLE_LINES = ['VISUAL SORTER', 'CASEYCH82'];
 const CHAR_W = 5, CHAR_H = 7, GAP_X = 1, GAP_Y = 3;
 
 interface TitleCell { col: number; row: number; lineIdx: number; fraction: number; }
@@ -63,7 +66,7 @@ function getTitleColor(lineIdx: number, fraction: number): string {
     const h = 180 + fraction * 130;
     return `hsl(${h}, 100%, 65%)`;
   }
-  // "BY CASEY" — gold → bright yellow
+  // "CASEYCH82" — gold → bright yellow
   const h = 42 + fraction * 18;
   return `hsl(${h}, 100%, 62%)`;
 }
