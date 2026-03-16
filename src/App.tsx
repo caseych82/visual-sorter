@@ -49,7 +49,7 @@ export default function App() {
   const [mode, setMode]                 = useState<Mode>('single');
   const [selectedAlgo, setSelectedAlgo] = useState<AlgorithmMeta | null>(null);
   const [arrayType, setArrayType]       = useState<ArrayType>('random');
-  const [arraySize, setArraySize]       = useState(80);
+  const [arraySize, setArraySize]       = useState(35);
   const [speed, setSpeed]               = useState(3);
   const [audioReady, setAudioReady]     = useState(false);
   const [vizMode, setVizMode]           = useState<VizMode>('tetris');
@@ -105,7 +105,7 @@ export default function App() {
         spaceComplexity: '-', description: '', explanation: '', codeExample: '',
         generator: function* () {},
       },
-      buildArray(80, 'random'),
+      buildArray(35, 'random'),
     );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
