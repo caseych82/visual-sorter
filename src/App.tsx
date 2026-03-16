@@ -102,7 +102,7 @@ export default function App() {
       {
         id: '__preview__', name: 'Preview',
         timeComplexity: { best: '-', average: '-', worst: '-' },
-        spaceComplexity: '-', description: '',
+        spaceComplexity: '-', description: '', explanation: '', codeExample: '',
         generator: function* () {},
       },
       buildArray(80, 'random'),
